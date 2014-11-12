@@ -3,10 +3,11 @@
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sex" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="wage" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Person" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

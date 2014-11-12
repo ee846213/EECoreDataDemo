@@ -2,7 +2,7 @@
 //  Person.h
 //  EECoreDataDemo
 //
-//  Created by 卓哥的世界你不懂 on 14/11/11.
+//  Created by 卓哥的世界你不懂 on 14/11/12.
 //  Copyright (c) 2014年 李卓. All rights reserved.
 //
 
@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * sex;
 @property (nonatomic, retain) NSNumber * wage;
+@property (nonatomic, retain) NSNumber * personID;
 
 @end

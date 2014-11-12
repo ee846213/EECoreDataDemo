@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FC8A56911A11B01A00AEBD69 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A56901A11B01A00AEBD69 /* Person.m */; };
+		FC8423621A135345004BB72F /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8423611A135345004BB72F /* Person.m */; };
 		FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A56961A11BB2700AEBD69 /* CustomCell.m */; };
 		FC8A569B1A11D0EA00AEBD69 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */; };
 		FCDB588E1A11A52F00EF848C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB588D1A11A52F00EF848C /* main.m */; };
@@ -31,8 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FC8A568F1A11B01A00AEBD69 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		FC8A56901A11B01A00AEBD69 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		FC8423601A135345004BB72F /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		FC8423611A135345004BB72F /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		FC8A56951A11BB2700AEBD69 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		FC8A56961A11BB2700AEBD69 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -103,8 +103,8 @@
 				FCDB589B1A11A52F00EF848C /* Images.xcassets */,
 				FCDB589D1A11A52F00EF848C /* LaunchScreen.xib */,
 				FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */,
-				FC8A568F1A11B01A00AEBD69 /* Person.h */,
-				FC8A56901A11B01A00AEBD69 /* Person.m */,
+				FC8423601A135345004BB72F /* Person.h */,
+				FC8423611A135345004BB72F /* Person.m */,
 				FCDB588B1A11A52F00EF848C /* Supporting Files */,
 			);
 			path = EECoreDataDemo;
@@ -236,10 +236,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC8423621A135345004BB72F /* Person.m in Sources */,
 				FCDB58911A11A52F00EF848C /* AppDelegate.m in Sources */,
 				FCDB588E1A11A52F00EF848C /* main.m in Sources */,
 				FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */,
-				FC8A56911A11B01A00AEBD69 /* Person.m in Sources */,
 				FCDB58971A11A52F00EF848C /* ViewController.m in Sources */,
 				FCDB58941A11A52F00EF848C /* Person.xcdatamodeld in Sources */,
 			);
