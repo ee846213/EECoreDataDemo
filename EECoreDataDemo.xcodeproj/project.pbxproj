@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC8A56911A11B01A00AEBD69 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A56901A11B01A00AEBD69 /* Person.m */; };
+		FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A56961A11BB2700AEBD69 /* CustomCell.m */; };
+		FC8A569B1A11D0EA00AEBD69 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */; };
 		FCDB588E1A11A52F00EF848C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB588D1A11A52F00EF848C /* main.m */; };
 		FCDB58911A11A52F00EF848C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58901A11A52F00EF848C /* AppDelegate.m */; };
-		FCDB58941A11A52F00EF848C /* EECoreDataDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58921A11A52F00EF848C /* EECoreDataDemo.xcdatamodeld */; };
+		FCDB58941A11A52F00EF848C /* Person.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */; };
 		FCDB58971A11A52F00EF848C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58961A11A52F00EF848C /* ViewController.m */; };
 		FCDB589A1A11A52F00EF848C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCDB58981A11A52F00EF848C /* Main.storyboard */; };
 		FCDB589C1A11A52F00EF848C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCDB589B1A11A52F00EF848C /* Images.xcassets */; };
@@ -28,12 +31,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC8A568F1A11B01A00AEBD69 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		FC8A56901A11B01A00AEBD69 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		FC8A56951A11BB2700AEBD69 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		FC8A56961A11BB2700AEBD69 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		FCDB58881A11A52F00EF848C /* EECoreDataDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EECoreDataDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCDB588C1A11A52F00EF848C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCDB588D1A11A52F00EF848C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FCDB588F1A11A52F00EF848C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FCDB58901A11A52F00EF848C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FCDB58931A11A52F00EF848C /* EECoreDataDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EECoreDataDemo.xcdatamodel; sourceTree = "<group>"; };
+		FCDB58931A11A52F00EF848C /* Person.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Person.xcdatamodel; sourceTree = "<group>"; };
 		FCDB58951A11A52F00EF848C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		FCDB58961A11A52F00EF848C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FCDB58991A11A52F00EF848C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -49,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC8A569B1A11D0EA00AEBD69 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 		FCDB587F1A11A52F00EF848C = {
 			isa = PBXGroup;
 			children = (
+				FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */,
 				FCDB588A1A11A52F00EF848C /* EECoreDataDemo */,
 				FCDB58A71A11A52F00EF848C /* EECoreDataDemoTests */,
 				FCDB58891A11A52F00EF848C /* Products */,
@@ -87,10 +97,14 @@
 				FCDB58901A11A52F00EF848C /* AppDelegate.m */,
 				FCDB58951A11A52F00EF848C /* ViewController.h */,
 				FCDB58961A11A52F00EF848C /* ViewController.m */,
+				FC8A56951A11BB2700AEBD69 /* CustomCell.h */,
+				FC8A56961A11BB2700AEBD69 /* CustomCell.m */,
 				FCDB58981A11A52F00EF848C /* Main.storyboard */,
 				FCDB589B1A11A52F00EF848C /* Images.xcassets */,
 				FCDB589D1A11A52F00EF848C /* LaunchScreen.xib */,
-				FCDB58921A11A52F00EF848C /* EECoreDataDemo.xcdatamodeld */,
+				FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */,
+				FC8A568F1A11B01A00AEBD69 /* Person.h */,
+				FC8A56901A11B01A00AEBD69 /* Person.m */,
 				FCDB588B1A11A52F00EF848C /* Supporting Files */,
 			);
 			path = EECoreDataDemo;
@@ -224,8 +238,10 @@
 			files = (
 				FCDB58911A11A52F00EF848C /* AppDelegate.m in Sources */,
 				FCDB588E1A11A52F00EF848C /* main.m in Sources */,
+				FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */,
+				FC8A56911A11B01A00AEBD69 /* Person.m in Sources */,
 				FCDB58971A11A52F00EF848C /* ViewController.m in Sources */,
-				FCDB58941A11A52F00EF848C /* EECoreDataDemo.xcdatamodeld in Sources */,
+				FCDB58941A11A52F00EF848C /* Person.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +432,7 @@
 				FCDB58B01A11A52F00EF848C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FCDB58B11A11A52F00EF848C /* Build configuration list for PBXNativeTarget "EECoreDataDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -424,17 +441,18 @@
 				FCDB58B31A11A52F00EF848C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FCDB58921A11A52F00EF848C /* EECoreDataDemo.xcdatamodeld */ = {
+		FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FCDB58931A11A52F00EF848C /* EECoreDataDemo.xcdatamodel */,
+				FCDB58931A11A52F00EF848C /* Person.xcdatamodel */,
 			);
-			currentVersion = FCDB58931A11A52F00EF848C /* EECoreDataDemo.xcdatamodel */;
-			path = EECoreDataDemo.xcdatamodeld;
+			currentVersion = FCDB58931A11A52F00EF848C /* Person.xcdatamodel */;
+			path = Person.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

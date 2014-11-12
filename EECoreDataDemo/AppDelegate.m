@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <CoreData/CoreData.h>
 @interface AppDelegate ()
 
 @end
