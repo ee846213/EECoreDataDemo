@@ -7,12 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "Person.h"
-#import <CoreData/CoreData.h>
 #import "CustomCell.h"
 #import <sqlite3.h>
-
-static NSString *modelName = @"Person";
+#import "PersonHelper.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *nameText;
 
@@ -22,23 +19,25 @@ static NSString *modelName = @"Person";
 @property (strong, nonatomic) IBOutlet UITextField *ageText;
 @property (strong, nonatomic) IBOutlet UITextField *wageText;
 @property (strong, nonatomic) IBOutlet UITableView *dataTable;
-@property (strong, nonatomic)NSManagedObjectContext *context;
-@property (strong, nonatomic)NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic)NSArray *dataArray;
+@property (strong, nonatomic)CoreDataService *coreData;
+@property (strong, nonatomic)PersonHelper *helper;
 @end
 
 @implementation ViewController
 {
     sqlite3 *db;
     NSInteger selectID;
-    NSInteger dataNum;
+    NSInteger dataID;
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self createSqlite];
-
-    [self loadData];
+    self.coreData = [CoreDataService shardInstance];
+    _helper = [[PersonHelper alloc]init];
+    _dataArray = [_helper findAllData];
+    [self refresh];
 
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -75,7 +74,7 @@ static NSString *modelName = @"Person";
         return;
     }
  
-    Person* person=(Person *)[NSEntityDescription insertNewObjectForEntityForName:modelName inManagedObjectContext:self.context];
+    Person* person=(Person *)[NSEntityDescription insertNewObjectForEntityForName:modelName inManagedObjectContext:_coreData.context];
     BOOL sex;
     if (_sexSegment.selectedSegmentIndex==0) {
         sex = NO;
@@ -84,25 +83,18 @@ static NSString *modelName = @"Person";
         sex = YES;
     }
 
+    
     [person setName:_nameText.text];
 
     [person setAge:[NSNumber numberWithInteger:[_ageText.text integerValue]]];
     [person setSex:[NSNumber numberWithBool:sex]];
     [person setWage:[NSNumber numberWithInteger:[_wageText.text integerValue]]];
-    [person setPersonID:[NSNumber numberWithInteger:(dataNum+1)]];
-    if ([self serchPersonWithID:(dataNum+1)]) {
-        NSError* error;
+    
+    [person setPersonID:[NSNumber numberWithInteger:(dataID+1)]];
+    if ([self serchPersonWithID:(dataID+1)]) {
         
-        
-        //保存数据
-        BOOL isSaveSuccess=[self.context save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful!");
-            [self loadData];
-        }
-
+        _dataArray = [_helper addPerson:person];
+        [self refresh];
     }
     
 }
@@ -112,33 +104,10 @@ static NSString *modelName = @"Person";
         [alert show];
         return;
     }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
-    //查询同ID的数据
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID=%i",selectID];
-    [fetchRequest setPredicate:predicate];
-    NSError *error = nil;
-    
-    NSArray *fetchedObjects =  [self.context executeFetchRequest:fetchRequest error:&error];
-    
-    if (fetchedObjects==nil) {
-        NSLog(@"查询失败");
-    }else
-    {
-        //删除查询到的数据
-        for(Person *person in fetchedObjects)
-        {
-            [self.context deleteObject:person];
-        }
-        BOOL isSaveSuccess=[self.context save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful!");
-            [self loadData];
-        }
-    }
-    
+  
+    _dataArray = [_helper deletePerson:selectID];
+    [self refresh];
+        
 }
 - (IBAction)searchPerson:(id)sender {
     
@@ -149,10 +118,13 @@ static NSString *modelName = @"Person";
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == [actionSheet destructiveButtonIndex]) {
-        [self loadData];
+        _dataArray = [_helper findAllData];
+        dataID = [[[_dataArray lastObject]valueForKey:@"PersonID"]integerValue];
+        [_dataTable reloadData];
     }else if(buttonIndex == [actionSheet firstOtherButtonIndex])
     {
         [self serchPersonWithName];
+        
     }
 }
 //查找名称相同的数据
@@ -163,30 +135,19 @@ static NSString *modelName = @"Person";
         [alert show];
         return;
     }
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name=%@",self.nameText.text];
-    [fetchRequest setPredicate:predicate];
-    NSError *error = nil;
-    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        
-    }else
-    {
-        [self refresh];
-        _dataArray = fetchedObjects;
-        [_dataTable reloadData];
-    }
+    _dataArray =[_helper searchByName:_nameText.text];
+    [_dataTable reloadData];
 }
 /**
  *  判断id是否有相同的
  */
--(BOOL)serchPersonWithID:(NSInteger )dataID
+-(BOOL)serchPersonWithID:(NSInteger )personID
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID=%i",dataID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID=%i",personID];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
-    NSInteger count=[self.context countForFetchRequest:fetchRequest error:&error];
+    NSInteger count=[self.coreData.context countForFetchRequest:fetchRequest error:&error];
     if (count>1) {
         NSLog(@"重复%ld",count);
         return NO;
@@ -202,71 +163,17 @@ static NSString *modelName = @"Person";
         [alert show];
     }else
     {
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personID=%i",selectID];
-        [fetchRequest setPredicate:predicate];
-        NSError *error = nil;
-        NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-        if (fetchRequest == nil) {
-            NSLog(@"%@",error);
-        }else
-        {
-//            BOOL sex;
-//            if (_sexSegment.selectedSegmentIndex==0) {
-//                sex = NO;
-//            }else
-//            {
-//                sex = YES;
-//            }
-            for (Person *person in fetchedObjects) {
-                [person setName:_nameText.text];
-                [person setSex:[NSNumber numberWithInteger:_sexSegment.selectedSegmentIndex]];
-                [person setAge:[NSNumber numberWithInteger:[_ageText.text integerValue]]];
-                [person setWage:[NSNumber numberWithUnsignedInteger:[_wageText.text integerValue]]];
-                
-            }
-            BOOL isSaveSuccess=[self.context save:&error];
-            if (!isSaveSuccess) {
-                NSLog(@"Error:%@",error);
-            }else{
-                NSLog(@"Save successful!");
-                [self loadData];
-            }
-        }
-        
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        [dic setValue:[NSNumber numberWithInteger:selectID] forKey:@"personID"];
+        [dic setValue:_nameText.text forKey:@"name"];
+        [dic setValue:[NSNumber numberWithInteger:[_ageText.text integerValue]]forKey:@"age"];
+        [dic setValue:[NSNumber numberWithInteger:_sexSegment.selectedSegmentIndex] forKey:@"sex"];
+        [dic setValue:[NSNumber numberWithUnsignedInteger:[_wageText.text integerValue]] forKey:@"wage"];
+        _dataArray = [_helper updatePerson:dic];
+        [self refresh];
     }
 }
--(void)loadData
-{
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:_context];
-//    [fetchRequest setEntity:entity];
-    [self refresh];
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
 
-    
-    //查询条件
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"age>%i", 0];
-//    [fetchRequest setPredicate:predicate];
-    //排序方法，ascending为yes是升序
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"personID"
-                                                                   ascending:YES];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"失败");
-    }else
-    {
-        
-        _dataArray = fetchedObjects;
-        dataNum = [[[_dataArray lastObject]valueForKey:@"personID"]integerValue];
-        [_dataTable reloadData];
-    }
-
-
-}
 #pragma mark- 排序
 - (IBAction)sortByName:(id)sender {
     [self sortByKey:@"name"];
@@ -286,11 +193,11 @@ static NSString *modelName = @"Person";
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:modelName];
     
-    //按名称排序
+    //按key排序
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     NSError *error = nil;
-    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedObjects = [_coreData.context executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         NSLog(@"失败");
     }else
@@ -343,89 +250,12 @@ static NSString *modelName = @"Person";
     _ageText.text = @"";
     _wageText.text =@"";
     selectID = -1;
+    [_dataTable reloadData];
+    dataID = [[[_dataArray lastObject]valueForKey:@"personID"]integerValue];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.bean.EECoreDataDemo" in the application's documents directory.
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
--(NSManagedObjectModel *)managedObjectModel
-{
-    if (_managedObjectModel!=nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle]URLForResource:modelName withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc]initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
--(NSManagedObjectContext *)context
-{
-    if (_context!=nil) {
-        return _context;
-    }
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (!coordinator) {
-        return nil;
-    }
-    _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_context setPersistentStoreCoordinator:coordinator];
-    return _context;
-    
-    //    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:[self managedObjectModel]];
-    //    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"EECoreDataDemo.sqlite"];
-    //    NSError *error =nil;
-    //    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-    //
-    //    }
-    //    return _persistentStoreCoordinator;
-    
-    
-}
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it.
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    // Create the coordinator and store
-    
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Person.sqlite"];
-    
-    NSError *error = nil;
-    NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        // Report any error we got.
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
-        dict[NSLocalizedFailureReasonErrorKey] = failureReason;
-        dict[NSUnderlyingErrorKey] = error;
-        error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-        // Replace this with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return _persistentStoreCoordinator;
-}
 @end
 
-//
-//@implementation CustomCell
-//
-//-(void)awakeFromNib
-//{
-//    
-//}
-//- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-//    [super setSelected:selected animated:animated];
-//    
-//}
-//@end

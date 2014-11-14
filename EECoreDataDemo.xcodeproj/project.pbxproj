@@ -10,6 +10,9 @@
 		FC8423621A135345004BB72F /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8423611A135345004BB72F /* Person.m */; };
 		FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC8A56961A11BB2700AEBD69 /* CustomCell.m */; };
 		FC8A569B1A11D0EA00AEBD69 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */; };
+		FCDA61641A1448A80091BBFC /* CoreDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDA61631A1448A80091BBFC /* CoreDataService.m */; };
+		FCDA61691A144CED0091BBFC /* PersonDao.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDA61681A144CED0091BBFC /* PersonDao.m */; };
+		FCDA616C1A144DA10091BBFC /* PersonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDA616B1A144DA10091BBFC /* PersonHelper.m */; };
 		FCDB588E1A11A52F00EF848C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB588D1A11A52F00EF848C /* main.m */; };
 		FCDB58911A11A52F00EF848C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58901A11A52F00EF848C /* AppDelegate.m */; };
 		FCDB58941A11A52F00EF848C /* Person.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */; };
@@ -36,6 +39,13 @@
 		FC8A56951A11BB2700AEBD69 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		FC8A56961A11BB2700AEBD69 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		FC8A569A1A11D0EA00AEBD69 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		FCDA61621A1448A80091BBFC /* CoreDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataService.h; sourceTree = "<group>"; };
+		FCDA61631A1448A80091BBFC /* CoreDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataService.m; sourceTree = "<group>"; };
+		FCDA61671A144CED0091BBFC /* PersonDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonDao.h; sourceTree = "<group>"; };
+		FCDA61681A144CED0091BBFC /* PersonDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonDao.m; sourceTree = "<group>"; };
+		FCDA616A1A144DA10091BBFC /* PersonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonHelper.h; sourceTree = "<group>"; };
+		FCDA616B1A144DA10091BBFC /* PersonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonHelper.m; sourceTree = "<group>"; };
+		FCDA616D1A1450440091BBFC /* EECoreDataDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EECoreDataDemo-Prefix.pch"; sourceTree = "<group>"; };
 		FCDB58881A11A52F00EF848C /* EECoreDataDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EECoreDataDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCDB588C1A11A52F00EF848C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCDB588D1A11A52F00EF848C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +81,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FCDA61651A144CB10091BBFC /* Domin */ = {
+			isa = PBXGroup;
+			children = (
+				FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */,
+				FC8423601A135345004BB72F /* Person.h */,
+				FC8423611A135345004BB72F /* Person.m */,
+			);
+			name = Domin;
+			sourceTree = "<group>";
+		};
+		FCDA61661A144CC70091BBFC /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				FCDA61671A144CED0091BBFC /* PersonDao.h */,
+				FCDA61681A144CED0091BBFC /* PersonDao.m */,
+			);
+			name = Dao;
+			sourceTree = "<group>";
+		};
 		FCDB587F1A11A52F00EF848C = {
 			isa = PBXGroup;
 			children = (
@@ -93,8 +122,14 @@
 		FCDB588A1A11A52F00EF848C /* EECoreDataDemo */ = {
 			isa = PBXGroup;
 			children = (
+				FCDA61661A144CC70091BBFC /* Dao */,
+				FCDA61651A144CB10091BBFC /* Domin */,
+				FCDA616B1A144DA10091BBFC /* PersonHelper.m */,
+				FCDA616A1A144DA10091BBFC /* PersonHelper.h */,
 				FCDB588F1A11A52F00EF848C /* AppDelegate.h */,
 				FCDB58901A11A52F00EF848C /* AppDelegate.m */,
+				FCDA61621A1448A80091BBFC /* CoreDataService.h */,
+				FCDA61631A1448A80091BBFC /* CoreDataService.m */,
 				FCDB58951A11A52F00EF848C /* ViewController.h */,
 				FCDB58961A11A52F00EF848C /* ViewController.m */,
 				FC8A56951A11BB2700AEBD69 /* CustomCell.h */,
@@ -102,9 +137,6 @@
 				FCDB58981A11A52F00EF848C /* Main.storyboard */,
 				FCDB589B1A11A52F00EF848C /* Images.xcassets */,
 				FCDB589D1A11A52F00EF848C /* LaunchScreen.xib */,
-				FCDB58921A11A52F00EF848C /* Person.xcdatamodeld */,
-				FC8423601A135345004BB72F /* Person.h */,
-				FC8423611A135345004BB72F /* Person.m */,
 				FCDB588B1A11A52F00EF848C /* Supporting Files */,
 			);
 			path = EECoreDataDemo;
@@ -114,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				FCDB588C1A11A52F00EF848C /* Info.plist */,
+				FCDA616D1A1450440091BBFC /* EECoreDataDemo-Prefix.pch */,
 				FCDB588D1A11A52F00EF848C /* main.m */,
 			);
 			name = "Supporting Files";
@@ -241,7 +274,10 @@
 				FCDB588E1A11A52F00EF848C /* main.m in Sources */,
 				FC8A56971A11BB2700AEBD69 /* CustomCell.m in Sources */,
 				FCDB58971A11A52F00EF848C /* ViewController.m in Sources */,
+				FCDA616C1A144DA10091BBFC /* PersonHelper.m in Sources */,
+				FCDA61641A1448A80091BBFC /* CoreDataService.m in Sources */,
 				FCDB58941A11A52F00EF848C /* Person.xcdatamodeld in Sources */,
+				FCDA61691A144CED0091BBFC /* PersonDao.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +342,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "EECoreDataDemo/EECoreDataDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -346,6 +383,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREFIX_HEADER = "EECoreDataDemo/EECoreDataDemo-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
